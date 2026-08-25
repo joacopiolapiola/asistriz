@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Asistriz</title>
+
+    <style>
+        /* =========================================
+           CONFIGURACIÓN GENERAL
+        ========================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f7f7;
+            color: #222;
+        }
+
+        /* =========================================
+           ENCABEZADO
+        ========================================= */
+
+        header {
+            background: #ffffff;
+            text-align: center;
+            padding: 45px 20px 35px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        header h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        header p {
+            font-size: 17px;
+            color: #666;
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+        /* =========================================
+           CONTENEDOR DEL CATÁLOGO
+        ========================================= */
+
+        .catalogo {
+            max-width: 1200px;
+            margin: 45px auto;
+            padding: 0 20px;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        /* =========================================
+           TARJETA DE PRODUCTO
+        ========================================= */
+
+        .producto {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .producto:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Imagen */
+
+        .imagen-producto {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        .imagen-producto:hover {
+            opacity: 0.9;
+        }
+
+        /* Información */
+
+        .contenido-producto {
+            padding: 22px;
+        }
+
+        .contenido-producto h2 {
+            font-size: 21px;
+            margin-bottom: 10px;
+        }
+
+        .descripcion {
+            color: #666;
+            line-height: 1.5;
+            font-size: 15px;
+            min-height: 48px;
+            margin-bottom: 15px;
+        }
+
+        .precio {
+            font-size: 21px;
+            font-weight: bold;
+            margin-bottom: 18px;
+            color: #222;
+        }
+
+        /* =========================================
+           BOTÓN WHATSAPP
+        ========================================= */
+
+        .boton-whatsapp {
+            display: block;
+            width: 100%;
+            padding: 13px 18px;
+
+            background: #25D366;
+            color: white;
+
+            text-align: center;
+            text-decoration: none;
+
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 15px;
+
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .boton-whatsapp:hover {
+            background: #1ebe5d;
+            transform: scale(1.02);
+        }
+
+        /* =========================================
+           VENTANA PARA VER LA IMAGEN GRANDE
+        ========================================= */
+
+        .visor-imagen {
+            display: none;
+
+            position: fixed;
+            z-index: 9999;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background: rgba(0, 0, 0, 0.88);
+
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+        }
+
+        .visor-imagen.activo {
+            display: flex;
+        }
+
+        .imagen-grande {
+            max-width: 95%;
+            max-height: 90vh;
+
+            object-fit: contain;
+
+            border-radius: 8px;
+
+            animation: aparecer 0.2s ease;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Botón X */
+
+        .cerrar {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .cerrar:hover {
+            color: #ddd;
+        }
+
+        /* =========================================
+           PIE DE PÁGINA
+        ========================================= */
+
+        footer {
+            background: #222;
+            color: #fff;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        /* =========================================
+           TABLET
+        ========================================= */
+
+        @media (max-width: 900px) {
+
+            .catalogo {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        /* =========================================
+           CELULAR
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 35px 20px 28px;
+            }
+
+            header h1 {
+                font-size: 30px;
+            }
+
+            header p {
+                font-size: 15px;
+            }
+
+            .catalogo {
+                grid-template-columns: 1fr;
+                margin-top: 30px;
+            }
+
+            .imagen-producto {
+                height: 300px;
+            }
+
+            .visor-imagen {
+                padding: 15px;
+            }
+
+            .imagen-grande {
+                max-width: 100%;
+            }
+
+            .cerrar {
+                top: 15px;
+                right: 20px;
+                font-size: 35px;
+            }
+        }
+        /* =========================================
+   CARRUSEL DE IMÁGENES
+========================================= */
+
+.carrusel {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+    background: #eee;
+}
+
+.carrusel-imagenes {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.4s ease;
+}
+
+.carrusel-imagen {
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+/* Botones anterior / siguiente */
+
+.carrusel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.55);
+    color: white;
+
+    font-size: 25px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 2;
+
+    transition: background 0.2s ease;
+}
+
+.carrusel-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.carrusel-anterior {
+    left: 12px;
+}
+
+.carrusel-siguiente {
+    right: 12px;
+}
+
+/* Puntitos inferiores */
+
+.carrusel-puntos {
+    position: absolute;
+
+    bottom: 12px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    gap: 7px;
+
+    z-index: 2;
+}
+
+.carrusel-punto {
+    width: 9px;
+    height: 9px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.55);
+
+    cursor: pointer;
+
+    padding: 0;
+}
+
+.carrusel-punto.activo {
+    background: white;
+    transform: scale(1.2);
+}
+
+
+/* En celular */
+
+@media (max-width: 600px) {
+
+    .carrusel {
+        height: 300px;
+    }
+
+    .carrusel-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 22px;
+    }
+}
+/* =========================================
+   SWIPE EN CELULAR
+========================================= */
+
+@media (max-width: 600px) {
+
+    .carrusel {
+        touch-action: pan-y;
+    }
+
+    .carrusel-btn {
+        display: none;
+    }
+
+}
+/* =========================================
+   BOTÓN DE TEMA
+========================================= */
+
+.boton-tema {
+    position: fixed;
+
+    top: 20px;
+    right: 20px;
+
+    width: 48px;
+    height: 48px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #222;
+    color: white;
+
+    font-size: 21px;
+
+    cursor: pointer;
+
+    z-index: 9998;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+    transition:
+        background 0.25s ease,
+        transform 0.2s ease;
+}
+
+.boton-tema:hover {
+    transform: scale(1.08);
+}
+
+
+/* =========================================
+   TEMA OSCURO
+========================================= */
+
+body.tema-oscuro {
+    background: #121212;
+    color: #f1f1f1;
+}
+
+
+/* Encabezado */
+
+body.tema-oscuro header {
+    background: #1c1c1c;
+    border-bottom-color: #333;
+}
+
+body.tema-oscuro header h1 {
+    color: #ffffff;
+}
+
+body.tema-oscuro header p {
+    color: #bdbdbd;
+}
+
+
+/* Productos */
+
+body.tema-oscuro .producto {
+    background: #1e1e1e;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.35);
+}
+
+body.tema-oscuro .contenido-producto h2 {
+    color: #ffffff;
+}
+
+body.tema-oscuro .descripcion {
+    color: #bdbdbd;
+}
+
+body.tema-oscuro .precio {
+    color: #ffffff;
+}
+
+
+/* Footer */
+
+body.tema-oscuro footer {
+    background: #080808;
+}
+
+
+/* Botón de tema en modo oscuro */
+
+body.tema-oscuro .boton-tema {
+    background: #f1f1f1;
+    color: #222;
+}
+
+
+/* =========================================
+   TRANSICIÓN SUAVE
+========================================= */
+
+body,
+header,
+.producto,
+footer,
+.contenido-producto {
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/* =========================================
+   CELULAR
+========================================= */
+
+@media (max-width: 600px) {
+
+    .boton-tema {
+        top: 12px;
+        right: 12px;
+
+        width: 42px;
+        height: 42px;
+
+        font-size: 18px;
+    }
+
+}
+
+    </style>
+</head>
+
+<body>
+<button
+    id="botonTema"
+    class="boton-tema"
+    onclick="cambiarTema()"
+    aria-label="Cambiar tema"
+    title="Cambiar tema"
+>
+    🌙
+</button>
+
+    <!-- =========================================
+         ENCABEZADO
+    ========================================== -->
+
+    <header>
+        <!-- CAMBIÁ ESTE TÍTULO -->
+        <h1>Asistriz</h1>
+
+        <!-- CAMBIÁ ESTE TEXTO -->
+        <p>
+            Productos hechos a encargo, preparados especialmente para vos.
+            Consultá disponibilidad, colores, medidas y opciones por WhatsApp.
+        </p>
+    </header>
+
+
+    <!-- =========================================
+         PRODUCTOS
+         
+         Para agregar productos simplemente copiá
+         una tarjeta .producto y modificá su contenido.
+    ========================================== -->
+
+    <main class="catalogo">
+
+
+<article class="producto">
+
+    <div class="carrusel">
+
+        <div class="carrusel-imagenes">
+
+            <!-- FOTO 1 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-1.jpg"
+                alt="Producto 1 - Foto 1"
+                onclick="abrirImagen(this)"
+            >
+
+            <!-- FOTO 2 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-2.jpg"
+                alt="Producto 1 - Foto 2"
+                onclick="abrirImagen(this)"
+            >
+
+            <!-- FOTO 3 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-3.jpg"
+                alt="Producto 1 - Foto 3"
+                onclick="abrirImagen(this)"
+            >
+
+            <!-- FOTO 4 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-4.jpg"
+                alt="Producto 1 - Foto 4"
+                onclick="abrirImagen(this)"
+            >
+
+        </div>
+
+
+        <!-- BOTÓN ANTERIOR -->
+
+        <button
+            class="carrusel-btn carrusel-anterior"
+            onclick="moverCarrusel(this, -1)"
+        >
+            ‹
+        </button>
+
+
+        <!-- BOTÓN SIGUIENTE -->
+
+        <button
+            class="carrusel-btn carrusel-siguiente"
+            onclick="moverCarrusel(this, 1)"
+        >
+            ›
+        </button>
+
+
+        <!-- PUNTOS -->
+
+        <div class="carrusel-puntos">
+
+            <button
+                class="carrusel-punto activo"
+                onclick="irAImagen(this, 0)"
+            ></button>
+
+            <button
+                class="carrusel-punto"
+                onclick="irAImagen(this, 1)"
+            ></button>
+
+            <button
+                class="carrusel-punto"
+                onclick="irAImagen(this, 2)"
+            ></button>
+
+            <button
+                class="carrusel-punto"
+                onclick="irAImagen(this, 3)"
+            ></button>
+
+        </div>
+
+    </div>
+
+
+    <div class="contenido-producto">
+
+        <h2>Producto 1</h2>
+
+        <p class="descripcion">
+            Descripción del producto. Acá podés explicar
+            materiales, medidas, colores y cualquier otro detalle.
+        </p>
+
+        <p class="precio">
+            $00.000
+        </p>
+
+        <a
+            class="boton-whatsapp"
+            href="https://wa.me/549XXXXXXXXXX?text=Hola,%20quiero%20consultar%20por%20el%20Producto%201"
+            target="_blank"
+        >
+            Consultar por WhatsApp
+        </a>
+
+    </div>
+
+</article>
+
+
+
+<article class="producto">
+
+    <div class="carrusel">
+
+        <div class="carrusel-imagenes">
+
+            <!-- FOTO 1 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-1.jpg"
+                alt="Producto 1 - Foto 1"
+                onclick="abrirImagen(this)"
+            >
+
+            <!-- FOTO 2 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-2.jpg"
+                alt="Producto 1 - Foto 2"
+                onclick="abrirImagen(this)"
+            >
+
+            <!-- FOTO 3 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-3.jpg"
+                alt="Producto 1 - Foto 3"
+                onclick="abrirImagen(this)"
+            >
+
+            <!-- FOTO 4 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-4.jpg"
+                alt="Producto 1 - Foto 4"
+                onclick="abrirImagen(this)"
+            >
+
+        </div>
+
+
+        <!-- BOTÓN ANTERIOR -->
+
+        <button
+            class="carrusel-btn carrusel-anterior"
+            onclick="moverCarrusel(this, -1)"
+        >
+            ‹
+        </button>
+
+
+        <!-- BOTÓN SIGUIENTE -->
+
+        <button
+            class="carrusel-btn carrusel-siguiente"
+            onclick="moverCarrusel(this, 1)"
+        >
+            ›
+        </button>
+
+
+        <!-- PUNTOS -->
+
+        <div class="carrusel-puntos">
+
+            <button
+                class="carrusel-punto activo"
+                onclick="irAImagen(this, 0)"
+            ></button>
+
+            <button
+                class="carrusel-punto"
+                onclick="irAImagen(this, 1)"
+            ></button>
+
+            <button
+                class="carrusel-punto"
+                onclick="irAImagen(this, 2)"
+            ></button>
+
+            <button
+                class="carrusel-punto"
+                onclick="irAImagen(this, 3)"
+            ></button>
+
+        </div>
+
+    </div>
+
+
+    <div class="contenido-producto">
+
+        <h2>Producto 1</h2>
+
+        <p class="descripcion">
+            Descripción del producto. Acá podés explicar
+            materiales, medidas, colores y cualquier otro detalle.
+        </p>
+
+        <p class="precio">
+            $00.000
+        </p>
+
+        <a
+            class="boton-whatsapp"
+            href="https://wa.me/549XXXXXXXXXX?text=Hola,%20quiero%20consultar%20por%20el%20Producto%201"
+            target="_blank"
+        >
+            Consultar por WhatsApp
+        </a>
+
+    </div>
+
+</article>
+
+
+
+<article class="producto">
+
+    <div class="carrusel">
+
+        <div class="carrusel-imagenes">
+
+            <!-- FOTO 1 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-1.jpg"
+                alt="Producto 1 - Foto 1"
+                onclick="abrirImagen(this)"
+            >
+
+            <!-- FOTO 2 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-2.jpg"
+                alt="Producto 1 - Foto 2"
+                onclick="abrirImagen(this)"
+            >
+
+            <!-- FOTO 3 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-3.jpg"
+                alt="Producto 1 - Foto 3"
+                onclick="abrirImagen(this)"
+            >
+
+            <!-- FOTO 4 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-4.jpg"
+                alt="Producto 1 - Foto 4"
+                onclick="abrirImagen(this)"
+            >
+
+        </div>
+
+
+        <!-- BOTÓN ANTERIOR -->
+
+        <button
+            class="carrusel-btn carrusel-anterior"
+            onclick="moverCarrusel(this, -1)"
+        >
+            ‹
+        </button>
+
+
+        <!-- BOTÓN SIGUIENTE -->
+
+        <button
+            class="carrusel-btn carrusel-siguiente"
+            onclick="moverCarrusel(this, 1)"
+        >
+            ›
+        </button>
+
+
+        <!-- PUNTOS -->
+
+        <div class="carrusel-puntos">
+
+            <button
+                class="carrusel-punto activo"
+                onclick="irAImagen(this, 0)"
+            ></button>
+
+            <button
+                class="carrusel-punto"
+                onclick="irAImagen(this, 1)"
+            ></button>
+
+            <button
+                class="carrusel-punto"
+                onclick="irAImagen(this, 2)"
+            ></button>
+
+            <button
+                class="carrusel-punto"
+                onclick="irAImagen(this, 3)"
+            ></button>
+
+        </div>
+
+    </div>
+
+
+    <div class="contenido-producto">
+
+        <h2>Producto 1</h2>
+
+        <p class="descripcion">
+            Descripción del producto. Acá podés explicar
+            materiales, medidas, colores y cualquier otro detalle.
+        </p>
+
+        <p class="precio">
+            $00.000
+        </p>
+
+        <a
+            class="boton-whatsapp"
+            href="https://wa.me/549XXXXXXXXXX?text=Hola,%20quiero%20consultar%20por%20el%20Producto%201"
+            target="_blank"
+        >
+            Consultar por WhatsApp
+        </a>
+
+    </div>
+
+</article>
+
+
+
+<article class="producto">
+
+    <div class="carrusel">
+
+        <div class="carrusel-imagenes">
+
+            <!-- FOTO 1 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-1.jpg"
+                alt="Producto 1 - Foto 1"
+                onclick="abrirImagen(this)"
+            >
+
+            <!-- FOTO 2 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-2.jpg"
+                alt="Producto 1 - Foto 2"
+                onclick="abrirImagen(this)"
+            >
+
+            <!-- FOTO 3 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-3.jpg"
+                alt="Producto 1 - Foto 3"
+                onclick="abrirImagen(this)"
+            >
+
+            <!-- FOTO 4 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-4.jpg"
+                alt="Producto 1 - Foto 4"
+                onclick="abrirImagen(this)"
+            >
+
+        </div>
+
+
+        <!-- BOTÓN ANTERIOR -->
+
+        <button
+            class="carrusel-btn carrusel-anterior"
+            onclick="moverCarrusel(this, -1)"
+        >
+            ‹
+        </button>
+
+
+        <!-- BOTÓN SIGUIENTE -->
+
+        <button
+            class="carrusel-btn carrusel-siguiente"
+            onclick="moverCarrusel(this, 1)"
+        >
+            ›
+        </button>
+
+
+        <!-- PUNTOS -->
+
+        <div class="carrusel-puntos">
+
+            <button
+                class="carrusel-punto activo"
+                onclick="irAImagen(this, 0)"
+            ></button>
+
+            <button
+                class="carrusel-punto"
+                onclick="irAImagen(this, 1)"
+            ></button>
+
+            <button
+                class="carrusel-punto"
+                onclick="irAImagen(this, 2)"
+            ></button>
+
+            <button
+                class="carrusel-punto"
+                onclick="irAImagen(this, 3)"
+            ></button>
+
+        </div>
+
+    </div>
+
+
+    <div class="contenido-producto">
+
+        <h2>Producto 1</h2>
+
+        <p class="descripcion">
+            Descripción del producto. Acá podés explicar
+            materiales, medidas, colores y cualquier otro detalle.
+        </p>
+
+        <p class="precio">
+            $00.000
+        </p>
+
+        <a
+            class="boton-whatsapp"
+            href="https://wa.me/549XXXXXXXXXX?text=Hola,%20quiero%20consultar%20por%20el%20Producto%201"
+            target="_blank"
+        >
+            Consultar por WhatsApp
+        </a>
+
+    </div>
+
+</article>
+
+
+
+<article class="producto">
+
+    <div class="carrusel">
+
+        <div class="carrusel-imagenes">
+
+            <!-- FOTO 1 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-1.jpg"
+                alt="Producto 1 - Foto 1"
+                onclick="abrirImagen(this)"
+            >
+
+            <!-- FOTO 2 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-2.jpg"
+                alt="Producto 1 - Foto 2"
+                onclick="abrirImagen(this)"
+            >
+
+            <!-- FOTO 3 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-3.jpg"
+                alt="Producto 1 - Foto 3"
+                onclick="abrirImagen(this)"
+            >
+
+            <!-- FOTO 4 -->
+            <img
+                class="carrusel-imagen"
+                src="imagenes/producto1-4.jpg"
+                alt="Producto 1 - Foto 4"
+                onclick="abrirImagen(this)"
+            >
+
+        </div>
+
+
+        <!-- BOTÓN ANTERIOR -->
+
+        <button
+            class="carrusel-btn carrusel-anterior"
+            onclick="moverCarrusel(this, -1)"
+        >
+            ‹
+        </button>
+
+
+        <!-- BOTÓN SIGUIENTE -->
+
+        <button
+            class="carrusel-btn carrusel-siguiente"
+            onclick="moverCarrusel(this, 1)"
+        >
+            ›
+        </button>
+
+
+        <!-- PUNTOS -->
+
+        <div class="carrusel-puntos">
+
+            <button
+                class="carrusel-punto activo"
+                onclick="irAImagen(this, 0)"
+            ></button>
+
+            <button
+                class="carrusel-punto"
+                onclick="irAImagen(this, 1)"
+            ></button>
+
+            <button
+                class="carrusel-punto"
+                onclick="irAImagen(this, 2)"
+            ></button>
+
+            <button
+                class="carrusel-punto"
+                onclick="irAImagen(this, 3)"
+            ></button>
+
+        </div>
+
+    </div>
+
+
+    <div class="contenido-producto">
+
+        <h2>Producto 1</h2>
+
+        <p class="descripcion">
+            Descripción del producto. Acá podés explicar
+            materiales, medidas, colores y cualquier otro detalle.
+        </p>
+
+        <p class="precio">
+            $00.000
+        </p>
+
+        <a
+            class="boton-whatsapp"
+            href="https://wa.me/549XXXXXXXXXX?text=Hola,%20quiero%20consultar%20por%20el%20Producto%201"
+            target="_blank"
+        >
+            Consultar por WhatsApp
+        </a>
+
+    </div>
+
+</article>
+
+
+
+
+    </main>
+
+
+    <!-- =========================================
+         PIE DE PÁGINA
+    ========================================== -->
+
+    <footer>
+        <p>
+            © 2026 Mi Catálogo · Productos hechos a encargo
+        </p>
+    </footer>
+
+
+    <!-- =========================================
+         VISOR DE IMÁGENES
+    ========================================== -->
+
+    <div
+        class="visor-imagen"
+        id="visorImagen"
+        onclick="cerrarImagen()"
+    >
+
+        <span class="cerrar">&times;</span>
+
+        <img
+            class="imagen-grande"
+            id="imagenGrande"
+            src=""
+            alt="Imagen ampliada"
+            onclick="event.stopPropagation()"
+        >
+
+    </div>
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script>
+
+        function abrirImagen(imagen) {
+
+            const visor = document.getElementById("visorImagen");
+            const imagenGrande = document.getElementById("imagenGrande");
+
+            imagenGrande.src = imagen.src;
+            imagenGrande.alt = imagen.alt;
+
+            visor.classList.add("activo");
+
+            // Evita que la página se desplace mientras
+            // la imagen está abierta.
+            document.body.style.overflow = "hidden";
+        }
+
+
+        function cerrarImagen() {
+
+            const visor = document.getElementById("visorImagen");
+
+            visor.classList.remove("activo");
+
+            document.body.style.overflow = "auto";
+        }
+
+
+        // También permite cerrar la imagen
+        // presionando la tecla ESC.
+
+        document.addEventListener("keydown", function(event) {
+
+            if (event.key === "Escape") {
+                cerrarImagen();
+            }
+
+        });
+
+        /* =========================================
+   CARRUSEL
+========================================= */
+
+function moverCarrusel(boton, direccion) {
+
+    const carrusel = boton.closest(".carrusel");
+
+    const imagenes = carrusel.querySelector(".carrusel-imagenes");
+
+    const fotos = carrusel.querySelectorAll(".carrusel-imagen");
+
+    const puntos = carrusel.querySelectorAll(".carrusel-punto");
+
+    let indice = parseInt(carrusel.dataset.indice || "0");
+
+    indice += direccion;
+
+    // Volver al principio
+    if (indice >= fotos.length) {
+        indice = 0;
+    }
+
+    // Ir a la última foto
+    if (indice < 0) {
+        indice = fotos.length - 1;
+    }
+
+    carrusel.dataset.indice = indice;
+
+    actualizarCarrusel(
+        carrusel,
+        indice
+    );
+}
+
+
+function irAImagen(punto, indice) {
+
+    const carrusel = punto.closest(".carrusel");
+
+    carrusel.dataset.indice = indice;
+
+    actualizarCarrusel(
+        carrusel,
+        indice
+    );
+}
+
+
+function actualizarCarrusel(carrusel, indice) {
+
+    const imagenes =
+        carrusel.querySelector(".carrusel-imagenes");
+
+    const puntos =
+        carrusel.querySelectorAll(".carrusel-punto");
+
+    imagenes.style.transform =
+        `translateX(-${indice * 100}%)`;
+
+    puntos.forEach((punto, i) => {
+
+        punto.classList.toggle(
+            "activo",
+            i === indice
+        );
+
+    });
+}
+/* =========================================
+   SWIPE / DESLIZAR CON EL DEDO
+========================================= */
+
+document.querySelectorAll(".carrusel").forEach(function(carrusel) {
+
+    let posicionInicial = 0;
+    let posicionFinal = 0;
+
+    carrusel.addEventListener("touchstart", function(event) {
+
+        posicionInicial = event.touches[0].clientX;
+
+    }, { passive: true });
+
+
+    carrusel.addEventListener("touchend", function(event) {
+
+        posicionFinal = event.changedTouches[0].clientX;
+
+        const diferencia = posicionFinal - posicionInicial;
+
+        // Distancia mínima para considerar que hubo un swipe
+        const distanciaMinima = 50;
+
+        if (Math.abs(diferencia) < distanciaMinima) {
+            return;
+        }
+
+        // Swipe hacia la izquierda
+        if (diferencia < 0) {
+
+            moverCarruselDesdeSwipe(carrusel, 1);
+
+        }
+
+        // Swipe hacia la derecha
+        else {
+
+            moverCarruselDesdeSwipe(carrusel, -1);
+
+        }
+
+    }, { passive: true });
+
+});
+
+
+function moverCarruselDesdeSwipe(carrusel, direccion) {
+
+    const imagenes =
+        carrusel.querySelector(".carrusel-imagenes");
+
+    const fotos =
+        carrusel.querySelectorAll(".carrusel-imagen");
+
+    const puntos =
+        carrusel.querySelectorAll(".carrusel-punto");
+
+    let indice =
+        parseInt(carrusel.dataset.indice || "0");
+
+    indice += direccion;
+
+
+    // Si llegamos al final, volver al principio
+    if (indice >= fotos.length) {
+        indice = 0;
+    }
+
+
+    // Si estamos al principio y deslizamos hacia atrás,
+    // ir a la última imagen
+    if (indice < 0) {
+        indice = fotos.length - 1;
+    }
+
+
+    carrusel.dataset.indice = indice;
+
+
+    actualizarCarrusel(
+        carrusel,
+        indice
+    );
+}
+// =========================================
+// TEMA OSCURO / CLARO
+// =========================================
+
+const botonTema = document.getElementById("botonTema");
+
+
+// Comprobar si el usuario ya había elegido
+// el tema oscuro anteriormente.
+
+if (localStorage.getItem("tema") === "oscuro") {
+
+    document.body.classList.add("tema-oscuro");
+
+    botonTema.textContent = "☀️";
+}
+
+
+// Cambiar tema
+
+function cambiarTema() {
+
+    document.body.classList.toggle("tema-oscuro");
+
+
+    const temaOscuro =
+        document.body.classList.contains("tema-oscuro");
+
+
+    if (temaOscuro) {
+
+        botonTema.textContent = "☀️";
+
+        localStorage.setItem("tema", "oscuro");
+
+    } else {
+
+        botonTema.textContent = "🌙";
+
+        localStorage.setItem("tema", "claro");
+
+    }
+
+}
+
+    </script>
+
+</body>
+</html>
