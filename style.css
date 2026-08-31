@@ -1,0 +1,730 @@
+/* =========================================
+   GUÍA ESTÉTICA MÉDICA - ASISTRIZ
+   CSS COMPLETO CON TEMA CLÍNICO Y MODO OSCURO
+========================================= */
+
+/* =========================================
+   COLORES MÉDICOS - VARIABLES CSS
+========================================= */
+
+:root {
+  /* Colores Primarios Médicos */
+  --color-blanco-quirurgico: #FFFFFF;
+  --color-gris-hospitalario: #F5F5F5;
+  --color-azul-medico: #1E5A96;
+  --color-verde-clinico: #0D7B5C;
+  --color-gris-acero: #2C3E50;
+  --color-gris-clinico: #7F8C8D;
+  
+  /* Colores Complementarios */
+  --color-azul-cielo: #3498DB;
+  --color-teal-hospitalario: #16A085;
+  --color-rojo-medico: #E74C3C;
+  --color-beige-quirurgico: #ECF0F1;
+  
+  /* Colores de Bordes */
+  --color-borde-claro: #DAEAF5;
+  --color-borde-suave: #E8EEF2;
+  
+  /* Sombras */
+  --sombra-suave: 0 2px 8px rgba(30, 90, 150, 0.08);
+  --sombra-estandar: 0 4px 16px rgba(30, 90, 150, 0.12);
+  --sombra-profundidad: 0 6px 24px rgba(30, 90, 150, 0.15);
+  --sombra-boton: 0 3px 12px rgba(13, 123, 92, 0.3);
+  
+  /* Tipografía */
+  --font-family-principal: "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Tema Oscuro */
+body.tema-oscuro {
+  --color-blanco-quirurgico: #ECEFF1;
+  --color-gris-hospitalario: #0F1419;
+  --color-azul-medico: #5DADE2;
+  --color-verde-clinico: #48C9B0;
+  --color-gris-acero: #BDC3C7;
+  --color-gris-clinico: #B0BEC5;
+  
+  --color-azul-cielo: #82B8E8;
+  --color-teal-hospitalario: #52D9C7;
+  --color-beige-quirurgico: #37474F;
+  
+  --color-borde-claro: #1A2332;
+  --color-borde-suave: #263238;
+  
+  --sombra-suave: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --sombra-estandar: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --sombra-profundidad: 0 6px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* =========================================
+   RESET Y CONFIGURACIÓN GENERAL
+========================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-principal);
+  background-color: var(--color-gris-hospitalario);
+  color: var(--color-gris-acero);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Transiciones suaves para modo oscuro */
+body,
+header,
+main,
+.producto,
+footer,
+.contenido-producto,
+.boton-tema {
+  transition: background-color 0.35s ease,
+              color 0.35s ease,
+              border-color 0.35s ease,
+              box-shadow 0.35s ease;
+}
+
+/* =========================================
+   ENCABEZADO MÉDICO
+========================================= */
+
+header {
+  background-color: var(--color-blanco-quirurgico);
+  text-align: center;
+  padding: 50px 24px 40px;
+  border-bottom: 2px solid var(--color-borde-claro);
+  box-shadow: var(--sombra-suave);
+}
+
+header h1 {
+  font-size: 40px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--color-azul-medico);
+  letter-spacing: 0.5px;
+}
+
+header p {
+  font-size: 16px;
+  color: var(--color-gris-clinico);
+  max-width: 720px;
+  margin: auto;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+/* =========================================
+   CONTENEDOR PRINCIPAL - GRID MÉDICO
+========================================= */
+
+.catalogo {
+  max-width: 1280px;
+  margin: 50px auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* =========================================
+   TARJETAS MÉDICAS DE PRODUCTO
+========================================= */
+
+.producto {
+  background-color: var(--color-blanco-quirurgico);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--color-borde-suave);
+  box-shadow: var(--sombra-suave);
+  transition: transform 0.3s ease, 
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+}
+
+.producto:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sombra-estandar);
+  border-color: var(--color-azul-medico);
+}
+
+/* =========================================
+   CARRUSEL DE IMÁGENES CLÍNICO
+========================================= */
+
+.carrusel {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  background-color: #F0F2F5;
+  border-top: 1px solid var(--color-borde-claro);
+}
+
+.carrusel-imagenes {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.35s ease;
+}
+
+.carrusel-imagen {
+  min-width: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.carrusel-imagen:hover {
+  opacity: 0.95;
+}
+
+/* Botones de Navegación Médica */
+.carrusel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 4px;
+  background-color: rgba(30, 90, 150, 0.75);
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: background-color 0.25s ease;
+  font-weight: 600;
+}
+
+.carrusel-btn:hover {
+  background-color: var(--color-azul-medico);
+}
+
+.carrusel-anterior {
+  left: 12px;
+}
+
+.carrusel-siguiente {
+  right: 12px;
+}
+
+/* Indicadores de Posición Hospitalarios */
+.carrusel-puntos {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+}
+
+.carrusel-punto {
+  width: 8px;
+  height: 8px;
+  border: 1px solid #B0BEC5;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.carrusel-punto:hover {
+  background-color: rgba(30, 90, 150, 0.3);
+}
+
+.carrusel-punto.activo {
+  background-color: var(--color-azul-medico);
+  border-color: var(--color-azul-medico);
+  transform: scale(1.1);
+}
+
+/* =========================================
+   CONTENIDO DE PRODUCTO
+========================================= */
+
+.contenido-producto {
+  padding: 24px;
+}
+
+.contenido-producto h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--color-azul-medico);
+}
+
+.descripcion {
+  font-size: 14px;
+  color: var(--color-gris-clinico);
+  line-height: 1.6;
+  min-height: 52px;
+  margin-bottom: 16px;
+  font-weight: 400;
+}
+
+.precio {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--color-verde-clinico);
+}
+
+/* =========================================
+   BOTÓN DE ACCIÓN MÉDICA - WHATSAPP
+========================================= */
+
+.boton-whatsapp {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  background-color: var(--color-verde-clinico);
+  color: var(--color-blanco-quirurgico);
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: var(--sombra-suave);
+}
+
+.boton-whatsapp:hover {
+  background-color: #0A5C47;
+  box-shadow: var(--sombra-boton);
+  transform: translateY(-1px);
+}
+
+.boton-whatsapp:active {
+  transform: translateY(0);
+}
+
+/* =========================================
+   VISUALIZADOR DE IMAGEN GRANDE - MODAL CLÍNICO
+========================================= */
+
+.visor-imagen {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.visor-imagen.activo {
+  display: flex;
+}
+
+.imagen-grande {
+  max-width: 92%;
+  max-height: 88vh;
+  object-fit: contain;
+  border: 2px solid var(--color-azul-medico);
+  border-radius: 4px;
+  animation: aparecer-clinia 0.3s ease;
+  box-shadow: 0 0 0 1px rgba(30, 90, 150, 0.2) inset;
+}
+
+@keyframes aparecer-clinia {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Botón de Cierre */
+.cerrar {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  color: #ECEFF1;
+  font-size: 36px;
+  font-weight: 300;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s ease;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(30, 90, 150, 0.2);
+  border-radius: 50%;
+}
+
+.cerrar:hover {
+  color: var(--color-azul-cielo);
+  background-color: rgba(30, 90, 150, 0.35);
+}
+
+/* =========================================
+   PIE DE PÁGINA MÉDICO
+========================================= */
+
+footer {
+  background-color: var(--color-gris-acero);
+  color: var(--color-blanco-quirurgico);
+  text-align: center;
+  padding: 30px 24px;
+  margin-top: 60px;
+  border-top: 1px solid var(--color-borde-suave);
+}
+
+footer p {
+  color: #BDC3C7;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* =========================================
+   BOTÓN DE TEMA - MODO OSCURO
+========================================= */
+
+.boton-tema {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border: 2px solid var(--color-blanco-quirurgico);
+  border-radius: 50%;
+  background-color: var(--color-azul-medico);
+  color: var(--color-blanco-quirurgico);
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--sombra-profundidad);
+  transition: transform 0.2s ease, background-color 0.35s ease;
+}
+
+.boton-tema:hover {
+  transform: scale(1.05);
+}
+
+.boton-tema:active {
+  transform: scale(0.98);
+}
+
+/* Tema Oscuro - Botón Tema */
+body.tema-oscuro .boton-tema {
+  background-color: #ECEFF1;
+  color: var(--color-azul-medico);
+  border-color: var(--color-azul-medico);
+}
+
+body.tema-oscuro .boton-tema:hover {
+  background-color: #FFFFFF;
+}
+
+/* =========================================
+   RESPONSIVE - TABLET MÉDICO (hasta 1024px)
+========================================= */
+
+@media (max-width: 1024px) {
+  .catalogo {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+  
+  header {
+    padding: 45px 20px 35px;
+  }
+  
+  header h1 {
+    font-size: 36px;
+  }
+}
+
+/* =========================================
+   RESPONSIVE - MÓVIL CLÍNICO (hasta 768px)
+========================================= */
+
+@media (max-width: 768px) {
+  header {
+    padding: 40px 16px 30px;
+    border-bottom: 1px solid var(--color-borde-suave);
+  }
+  
+  header h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+  
+  header p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  
+  .catalogo {
+    grid-template-columns: 1fr;
+    margin-top: 30px;
+    gap: 20px;
+    padding: 0 16px;
+  }
+  
+  .carrusel {
+    height: 300px;
+  }
+  
+  .carrusel-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+  
+  /* Ocultar botones de carrusel en móvil - usar swipe */
+  .carrusel-btn {
+    display: none;
+  }
+  
+  .contenido-producto {
+    padding: 20px;
+  }
+  
+  .contenido-producto h2 {
+    font-size: 20px;
+  }
+  
+  .descripcion {
+    font-size: 13px;
+    min-height: 45px;
+  }
+  
+  .precio {
+    font-size: 22px;
+  }
+  
+  .boton-whatsapp {
+    font-size: 14px;
+    padding: 12px 16px;
+  }
+  
+  .visor-imagen {
+    padding: 16px;
+  }
+  
+  .imagen-grande {
+    max-width: 100%;
+    max-height: 85vh;
+  }
+  
+  .cerrar {
+    top: 16px;
+    right: 16px;
+    font-size: 32px;
+    width: 44px;
+    height: 44px;
+  }
+  
+  .boton-tema {
+    top: 12px;
+    right: 12px;
+    width: 46px;
+    height: 46px;
+    font-size: 20px;
+  }
+  
+  footer {
+    padding: 24px 16px;
+  }
+}
+
+/* =========================================
+   RESPONSIVE - MÓVIL PEQUEÑO (hasta 480px)
+========================================= */
+
+@media (max-width: 480px) {
+  header {
+    padding: 32px 12px 24px;
+  }
+  
+  header h1 {
+    font-size: 28px;
+  }
+  
+  header p {
+    font-size: 14px;
+  }
+  
+  .catalogo {
+    padding: 0 12px;
+    gap: 16px;
+  }
+  
+  .carrusel {
+    height: 280px;
+  }
+  
+  .contenido-producto {
+    padding: 18px;
+  }
+  
+  .contenido-producto h2 {
+    font-size: 18px;
+  }
+  
+  .descripcion {
+    font-size: 13px;
+    min-height: 40px;
+  }
+  
+  .precio {
+    font-size: 20px;
+  }
+  
+  .boton-whatsapp {
+    font-size: 13px;
+    padding: 11px 14px;
+  }
+  
+  .boton-tema {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+  
+  footer p {
+    font-size: 12px;
+  }
+}
+
+/* =========================================
+   ETIQUETAS MÉDICAS - OPCIONAL
+========================================= */
+
+.etiqueta {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+
+.etiqueta-urgente {
+  background-color: var(--color-rojo-medico);
+  color: var(--color-blanco-quirurgico);
+}
+
+.etiqueta-promocion {
+  background-color: var(--color-verde-clinico);
+  color: var(--color-blanco-quirurgico);
+}
+
+.etiqueta-disponible {
+  background-color: var(--color-azul-cielo);
+  color: var(--color-blanco-quirurgico);
+}
+
+.etiqueta-consultar {
+  background-color: var(--color-azul-medico);
+  color: var(--color-blanco-quirurgico);
+}
+
+/* =========================================
+   UTILIDADES Y HELPERS
+========================================= */
+
+.texto-secundario {
+  color: var(--color-gris-clinico);
+  font-size: 14px;
+}
+
+.texto-primario {
+  color: var(--color-azul-medico);
+  font-weight: 600;
+}
+
+.separador {
+  height: 1px;
+  background-color: var(--color-borde-suave);
+  margin: 16px 0;
+}
+
+.contenedor {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* =========================================
+   ACCESIBILIDAD
+========================================= */
+
+/* Focus visible para navegación con teclado */
+.boton-whatsapp:focus-visible,
+.boton-tema:focus-visible,
+.carrusel-btn:focus-visible {
+  outline: 2px solid var(--color-azul-medico);
+  outline-offset: 2px;
+}
+
+/* Reducir movimiento si usuario prefiere */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* =========================================
+   IMPRESIÓN - ESTILO PARA IMPRIMIR
+========================================= */
+
+@media print {
+  .boton-tema,
+  .carrusel-btn,
+  .boton-whatsapp {
+    display: none;
+  }
+  
+  body {
+    background-color: white;
+    color: black;
+  }
+  
+  .producto {
+    page-break-inside: avoid;
+    border: 1px solid #ccc;
+  }
+}
